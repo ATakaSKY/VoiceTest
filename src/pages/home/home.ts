@@ -141,7 +141,7 @@ export class HomePage {
     // Start the recognition process
     this.speechRecognition.startListening({}).subscribe(
       (matches: Array<string>) => {
-        //alert(JSON.stringify(matches[0]));
+        alert(JSON.stringify(matches[0]));
 
         this.client.textRequest(matches[0]).then(response => {
           // place your result processing here
