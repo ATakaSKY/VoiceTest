@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Accident Details</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>What happened?</ion-label>
+      <ion-select [(ngModel)]="incidentSelect" (ionChange)="onIncidentOk()">
+        <ion-option *ngFor="let incident of incidentOptions" (ionSelect)="selectedIncidentEvent($event, incident)">{{incident}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngIf="coverageFlag">
+    <ion-card-header>
+      We will cover :
+    </ion-card-header>
+    <ion-card-content>
+      <ul>
+        <li *ngFor="let notes of incidentCoverNotes">{{notes}}</li>
+      </ul>
+      <!-- The British use the term "header", but the American term "head-shot" the English simply refuse to adopt. -->
+    </ion-card-content>
+  </ion-card>
+
+  <button ion-button block color="default" (click)="goToUploadPicture()">Continue</button>
+
+</ion-content>

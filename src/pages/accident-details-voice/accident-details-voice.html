@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Accident Details</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>What happened?</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group *ngIf="showYesNo">
+
+    <!-- <ion-item *ngFor="let option of yesNoOptions">
+      <ion-label>{{option}}</ion-label>
+      <ion-radio value="{{option}}"></ion-radio>
+    </ion-item> -->
+
+    <!-- <ion-item>
+      <ion-label>Rust</ion-label>
+      <ion-radio value="rust"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Python</ion-label>
+      <ion-radio value="python"></ion-radio>
+    </ion-item> -->
+  </ion-list>
+
+  <!-- <button ion-button block color="default" (click)="goToUploadPicture()">Continue</button> -->
+
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Upload Picture</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Do you have a photo of the accident scene you can upload?</ion-label>
+      <ion-select [(ngModel)]="imageSelect" (ionChange)="onImageOk()">
+        <ion-option *ngFor="let option of imageOptions" (ionSelect)="selectedImageEvent($event, option)">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button block color="default" (click)="goToClaimDetails()">Continue</button>
+</ion-content>

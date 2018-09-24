@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Claim Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list no-lines>
+    <ion-item>
+      <ion-label>Date of Accident?</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Was there property damage?</ion-label>
+      <ion-select [(ngModel)]="hasPropertyDamage" (ionChange)="onPropertyDamageChange()">
+        <ion-option *ngFor="let option of yesNoOptions">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Do you think there was over 1000$ in property damages?</ion-label>
+      <ion-select [(ngModel)]="hasPropertyDamageCost" (ionChange)="onPropertyChargeChange()">
+        <ion-option *ngFor="let option of yesNoOptions">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Was there any injuries?</ion-label>
+      <ion-select [(ngModel)]="hasInjury" (ionChange)="onInjuryChange()">
+        <ion-option *ngFor="let option of yesNoOptions">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+
+  <button ion-button block color="default" (click)="submitClaim()">Submit Claim</button>
+</ion-content>

@@ -1,0 +1,16 @@
+page-claim-submission {
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.4rem !important;
+    padding: 14px;
+  }
+
+  .item-md {
+    top: 20%;
+    text-align: center;
+
+    & p {
+      font-size: 1.6rem;
+    }
+  }
+}
