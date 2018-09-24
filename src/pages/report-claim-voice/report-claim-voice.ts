@@ -30,28 +30,31 @@ export class ReportClaimVoicePage {
     this.client = apiAIClientService.getAPIAIClientObject();
     this.policyOptions = navParams.get('policyOptions');
 
-    setTimeout(() => {
-      this.hearPolicy();
-    }, 1000);
+    this.hearPolicy();
   }
 
   ionViewDidLoad() {}
 
-  hearPolicy() {
+  async hearPolicy() {
     // Start the recognition process
-    this.speechRecognition.startListening({ showPopup: false }).subscribe(
-      (matches: Array<string>) => {
-        //alert(JSON.stringify(matches[0]));
+    const speechrecog = await this.speechRecognition.startListening({
+      showPopup: false
+    });
+    setTimeout(() => {
+      speechrecog.subscribe(
+        (matches: Array<string>) => {
+          //alert(JSON.stringify(matches[0]));
 
-        this.navCtrl.push(AccidentDetailsVoicePage, {
-          policySelected: matches[0]
-        });
-      },
-      error => {
-        // place your error processing here
-        alert(error);
-      }
-    );
+          this.navCtrl.push(AccidentDetailsVoicePage, {
+            policySelected: matches[0]
+          });
+        },
+        error => {
+          // place your error processing here
+          alert(error);
+        }
+      );
+    }, 1000);
 
     //     this.tts
     //       .speak({

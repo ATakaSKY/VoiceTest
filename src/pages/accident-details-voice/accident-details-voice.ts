@@ -39,14 +39,16 @@ export class AccidentDetailsVoicePage {
   initializeAccidentDetailsVoice() {
     this.tts
       .speak({
-        text: this.policySelected + '. ' + 'Please tell us what happened',
+        text:
+          'You chose ' +
+          this.policySelected +
+          '. ' +
+          'Please tell us what happened',
         locale: 'en-IN',
         rate: 1
       })
       .then(() => {
-        setTimeout(() => {
-          this.whatHappenedRequest();
-        }, 1500);
+        this.whatHappenedRequest();
       })
       .catch((reason: any) => alert(reason));
     // Start the recognition process
@@ -113,7 +115,7 @@ export class AccidentDetailsVoicePage {
     // Start the recognition process
     this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
-        alert(JSON.stringify(matches[0]));
+        //alert(JSON.stringify(matches[0]));
 
         this.client.textRequest(matches[0]).then(response => {
           // place your result processing here
@@ -121,12 +123,12 @@ export class AccidentDetailsVoicePage {
           this.ngZone.run(
             () => {
               let formattedResponse = JSON.parse(
-                response.result.fulfillment.speech.speech
+                response.result.fulfillment.speech
               );
 
               this.tts
                 .speak({
-                  text: formattedResponse,
+                  text: formattedResponse.speech,
                   locale: 'en-IN',
                   rate: 1
                 })

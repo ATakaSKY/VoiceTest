@@ -94,16 +94,15 @@ export class AccidentDetailsPage {
       response => {
         // place your result processing here
         console.log(response);
+        //console.log(JSON.parse(response.result.fulfillmentText));
 
         this.ngZone.run(() => {
           loading.dismiss();
-          let incidentNotes = JSON.parse(
-            response.result.fulfillment.speech.responseText
-          );
+          let incidentNotes = JSON.parse(response.result.fulfillment.speech);
           console.log(incidentNotes);
-          if (incidentNotes.length > 0) {
+          if (incidentNotes.responseText.length > 0) {
             this.coverageFlag = true;
-            this.incidentCoverNotes = incidentNotes;
+            this.incidentCoverNotes = incidentNotes.responseText;
           }
         });
       },

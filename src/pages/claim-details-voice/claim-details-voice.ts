@@ -23,8 +23,9 @@ export class ClaimDetailsVoicePage {
     this.resultFromIncidentPage = navParams.get('res');
 
     if (this.resultFromIncidentPage) {
-      this.processIncident();
+      alert('This was our journey. See you soon!!');
     } else {
+      this.processIncident();
       //TODO - if users selects no
       // this.navCtrl.pop({
       //   policySelected:navParams.get('policySelected')
