@@ -21,17 +21,17 @@
   </ion-fab>
 
   <ion-list>
-    <ion-item *ngIf="whatHappenedView">
+    <ion-item style="background: gray" *ngIf="whatHappenedView">
       <ion-label>{{selectedPolicyText}}</ion-label>
     </ion-item>
-    <ion-item *ngIf="!whatHappenedView">
+    <ion-item style="background: gray" *ngIf="!whatHappenedView">
       <ion-label>{{whatHappenedConfirmText}}</ion-label>
     </ion-item>
   </ion-list>
 
   <ion-list radio-group *ngIf="!whatHappenedView">
 
-    <ion-item *ngFor="let option of yesNoOptions">
+    <ion-item style="background: gray" *ngFor="let option of yesNoOptions">
       <ion-label>{{option}}</ion-label>
       <ion-radio value="{{option}}"></ion-radio>
     </ion-item>
