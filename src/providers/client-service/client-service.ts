@@ -66,10 +66,10 @@ export class ClientServiceProvider {
       )
       .subscribe(
         res => {
-          alert(`success ${res}`);
+          // alert(`success ${res}`);
         },
         err => {
-          alert(`success ${err}`);
+          // alert(`success ${err}`);
         }
       );
   }

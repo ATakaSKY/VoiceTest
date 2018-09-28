@@ -197,7 +197,7 @@ export class HomePage {
     // Start the recognition process
     this.speechRecognition.startListening({}).subscribe(
       (matches: Array<string>) => {
-        alert(JSON.stringify(matches[0]));
+        //alert(JSON.stringify(matches[0]));
 
         this.hearPolicy(matches[0]);
       },
@@ -222,7 +222,7 @@ export class HomePage {
                 rate: 1
               })
               .then(() => {
-                alert(123);
+                //alert(123);
               })
               .catch((reason: any) => this.displayToast(reason));
           } else {

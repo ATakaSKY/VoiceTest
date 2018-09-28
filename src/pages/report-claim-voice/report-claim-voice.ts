@@ -84,12 +84,12 @@ export class ReportClaimVoicePage {
     speechrecog.subscribe(
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
-        alert(matches[0]);
+        // alert(matches[0]);
         let findPolicyIfExist = this.policyOptions.find(
           option => option.toLowerCase() == matches[0].toLowerCase()
         );
 
-        alert(findPolicyIfExist);
+        // alert(findPolicyIfExist);
 
         if (findPolicyIfExist) {
           localStorage.setItem('LossCause', findPolicyIfExist);
@@ -112,7 +112,7 @@ export class ReportClaimVoicePage {
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.displayToast(error);
       }
     );
   }

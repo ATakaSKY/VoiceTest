@@ -61,7 +61,7 @@ export class AccidentDetailsVoicePage {
       .then(() => {
         //this.whatHappenedRequest();
       })
-      .catch((reason: any) => alert(reason));
+      .catch((reason: any) => this.displayToast(reason));
     // Start the recognition process
     // this.speechRecognition.startListening(this.policySelected).subscribe( --- use policy in future
     // this.speechRecognition.startListening(this.policySelected).subscribe(
@@ -180,10 +180,10 @@ export class AccidentDetailsVoicePage {
                       // });
                       //this.getWhatHappenedConfirmAndGoToClaimDetails();
                     })
-                    .catch((reason: any) => alert(reason));
+                    .catch((reason: any) => this.displayToast(reason));
                 }
               },
-              onerror => alert(JSON.stringify(onerror))
+              onerror => this.displayToast(onerror)
             );
 
             // this.messages.push({
@@ -196,7 +196,7 @@ export class AccidentDetailsVoicePage {
         },
         error => {
           // place your error processing here
-          alert(error);
+          this.displayToast(error);
         }
       );
     } else {
@@ -213,7 +213,7 @@ export class AccidentDetailsVoicePage {
           this.navCtrl.push(ClaimDetailsVoicePage);
         } else if (matches[0].toLowerCase() === 'no') {
           this.whatHappenedView = true;
-         // this.displayToast(this.whatHappenedView);
+          // this.displayToast(this.whatHappenedView);
           //this.selectedPolicyText = this.policySelected;
           this.initializeAccidentDetailsVoice();
         } else {

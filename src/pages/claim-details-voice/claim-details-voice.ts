@@ -109,9 +109,9 @@ export class ClaimDetailsVoicePage {
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
                 //this.displayToast(whatHappenedResponse);
-                alert(123);
-                alert(whatHappenedResponse.speech);
-                alert(whatHappenedResponse.date);
+                //alert(123);
+                //alert(whatHappenedResponse.speech);
+                //alert(whatHappenedResponse.date);
                 //used to toggle what happened and what happened confirm view
 
                 if (whatHappenedResponse.date === undefined) {
@@ -153,11 +153,11 @@ export class ClaimDetailsVoicePage {
                       // });
                       //this.getWhatHappenedConfirmAndGoToClaimDetails();
                     })
-                    .catch((reason: any) => alert(reason));
+                    .catch((reason: any) => this.displayToast(reason));
                 }
               }
             },
-            onerror => alert(JSON.stringify(onerror))
+            onerror => this.displayToast(onerror)
           );
 
           // this.messages.push({
@@ -170,7 +170,7 @@ export class ClaimDetailsVoicePage {
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.displayToast(error);
       }
     );
   }
@@ -179,7 +179,7 @@ export class ClaimDetailsVoicePage {
     this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
-        alert(matches[0]);
+        //alert(matches[0]);
         this.client.textRequest(matches[0]).then(response => {
           // place your result processing here
           console.log(response);
@@ -199,9 +199,9 @@ export class ClaimDetailsVoicePage {
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
                 //this.displayToast(whatHappenedResponse);
-                alert(123);
-                alert(whatHappenedResponse.speech);
-                alert(whatHappenedResponse.damageAmount);
+                //alert(123);
+                //alert(whatHappenedResponse.speech);
+                // alert(whatHappenedResponse.damageAmount);
                 //used to toggle what happened and what happened confirm view
 
                 if (whatHappenedResponse.damageAmount === undefined) {
@@ -219,7 +219,7 @@ export class ClaimDetailsVoicePage {
                       // });
                       //this.getWhatHappenedConfirmAndGoToClaimDetails();
                     })
-                    .catch((reason: any) => alert(reason));
+                    .catch((reason: any) => this.displayToast(reason));
                 } else {
                   this.sufferInjuryText = whatHappenedResponse.speech;
                   this.damageAmount = whatHappenedResponse.damageAmount;
@@ -244,11 +244,11 @@ export class ClaimDetailsVoicePage {
                       // });
                       //this.getWhatHappenedConfirmAndGoToClaimDetails();
                     })
-                    .catch((reason: any) => alert(reason));
+                    .catch((reason: any) => this.displayToast(reason));
                 }
               }
             },
-            onerror => alert(JSON.stringify(onerror))
+            onerror => this.displayToast(onerror)
           );
 
           // this.messages.push({
@@ -261,7 +261,7 @@ export class ClaimDetailsVoicePage {
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.displayToast(error);
       }
     );
   }
@@ -270,7 +270,7 @@ export class ClaimDetailsVoicePage {
     this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
-        alert(matches[0]);
+        // alert(matches[0]);
         this.client.textRequest(matches[0]).then(response => {
           // place your result processing here
           console.log(response);
@@ -290,9 +290,9 @@ export class ClaimDetailsVoicePage {
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
                 //this.displayToast(whatHappenedResponse);
-                alert(123);
-                alert(whatHappenedResponse.speech);
-                alert(whatHappenedResponse.howMany);
+                // alert(123);
+                //alert(whatHappenedResponse.speech);
+                //alert(whatHappenedResponse.howMany);
                 //used to toggle what happened and what happened confirm view
 
                 if (whatHappenedResponse.howMany === undefined) {
@@ -328,11 +328,11 @@ export class ClaimDetailsVoicePage {
                       // });
                       //this.getWhatHappenedConfirmAndGoToClaimDetails();
                     })
-                    .catch((reason: any) => alert(reason));
+                    .catch((reason: any) => this.displayToast(reason));
                 }
               }
             },
-            onerror => alert(JSON.stringify(onerror))
+            onerror => this.displayToast(onerror)
           );
 
           // this.messages.push({
@@ -345,7 +345,7 @@ export class ClaimDetailsVoicePage {
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.displayToast(error);
       }
     );
   }
@@ -355,7 +355,7 @@ export class ClaimDetailsVoicePage {
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
         let matchName = matches[0];
-        alert(matchName);
+        //alert(matchName);
         this.client.textRequest('Injured Person').then(response => {
           // place your result processing here
           console.log(response);
@@ -375,9 +375,9 @@ export class ClaimDetailsVoicePage {
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
                 //this.displayToast(whatHappenedResponse);
-                alert(123);
-                alert(whatHappenedResponse.speech);
-                alert(whatHappenedResponse.nameOfInjured);
+                //alert(123);
+                //alert(whatHappenedResponse.speech);
+                //alert(whatHappenedResponse.nameOfInjured);
                 //used to toggle what happened and what happened confirm view
 
                 // if (whatHappenedResponse.nameOfInjured === undefined) {
@@ -394,7 +394,7 @@ export class ClaimDetailsVoicePage {
                 //       // });
                 //       //this.getWhatHappenedConfirmAndGoToClaimDetails();
                 //     })
-                //     .catch((reason: any) => alert(reason));
+                //     .catch((reason: any) =>this.displayToast(reason));
                 // }
 
                 this.medicalCostFilledText = `Are the medical costs for ${matchName} less than $2500 or more than $2500?`;
@@ -422,10 +422,10 @@ export class ClaimDetailsVoicePage {
                     // });
                     //this.getWhatHappenedConfirmAndGoToClaimDetails();
                   })
-                  .catch((reason: any) => alert(reason));
+                  .catch((reason: any) => this.displayToast(reason));
               }
             },
-            onerror => alert(JSON.stringify(onerror))
+            onerror => this.displayToast(onerror)
           );
 
           // this.messages.push({
@@ -438,7 +438,7 @@ export class ClaimDetailsVoicePage {
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.displayToast(error);
       }
     );
   }
@@ -447,7 +447,7 @@ export class ClaimDetailsVoicePage {
     this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
-        alert(matches[0]);
+        // alert(matches[0]);
         this.client.textRequest(matches[0]).then(response => {
           // place your result processing here
           console.log(response);
@@ -467,19 +467,19 @@ export class ClaimDetailsVoicePage {
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
                 //this.displayToast(whatHappenedResponse);
-                alert(123);
-                alert(whatHappenedResponse.speech);
-                alert(whatHappenedResponse.medicalCost);
+                //alert(123);
+                //alert(whatHappenedResponse.speech);
+                //alert(whatHappenedResponse.medicalCost);
                 localStorage.removeItem('EstimatedAmount');
                 localStorage.setItem(
                   'EstimatedAmount',
                   whatHappenedResponse.damageAmount
                 );
-                alert(JSON.stringify(localStorage.getItem('LossCause')));
-                alert(JSON.stringify(localStorage.getItem('LossUpdate')));
-                alert(JSON.stringify(localStorage.getItem('InjuredPerson')));
-                alert(JSON.stringify(localStorage.getItem('Description')));
-                alert(JSON.stringify(localStorage.getItem('EstimatedAmount')));
+                // alert(JSON.stringify(localStorage.getItem('LossCause')));
+                // alert(JSON.stringify(localStorage.getItem('LossUpdate')));
+                // alert(JSON.stringify(localStorage.getItem('InjuredPerson')));
+                // alert(JSON.stringify(localStorage.getItem('Description')));
+                // alert(JSON.stringify(localStorage.getItem('EstimatedAmount')));
                 //used to toggle what happened and what happened confirm view
 
                 //medicalCost --- use in localForage
@@ -500,7 +500,7 @@ export class ClaimDetailsVoicePage {
                 //       // });
                 //       //this.getWhatHappenedConfirmAndGoToClaimDetails();
                 //     })
-                //     .catch((reason: any) => alert(reason));
+                //     .catch((reason: any) =>this.displayToast(reason));
                 // } else {
                 this.medicalCostFilled = whatHappenedResponse.medicalCost;
                 //this.didAnyoneSufferInjuriesFilled = false;
@@ -520,11 +520,11 @@ export class ClaimDetailsVoicePage {
                     // });
                     //this.getWhatHappenedConfirmAndGoToClaimDetails();
                   })
-                  .catch((reason: any) => alert(reason));
+                  .catch((reason: any) => this.displayToast(reason));
                 //}
               }
             },
-            onerror => alert(JSON.stringify(onerror))
+            onerror => this.displayToast(onerror)
           );
 
           // this.messages.push({
@@ -537,7 +537,7 @@ export class ClaimDetailsVoicePage {
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.displayToast(error);
       }
     );
   }
@@ -550,7 +550,7 @@ export class ClaimDetailsVoicePage {
         rate: 1
       })
       .then(res => {})
-      .catch((reason: any) => alert(reason));
+      .catch((reason: any) => this.displayToast(reason));
   }
 
   submitClaim() {}
@@ -582,9 +582,9 @@ export class ClaimDetailsVoicePage {
   //                   policySelected: this.policySelected
   //                 });
   //               })
-  //               .catch((reason: any) => alert(reason));
+  //               .catch((reason: any) =>this.displayToast(reason));
   //           },
-  //           onerror => alert(JSON.stringify(onerror))
+  //           onerror => this.displayToast(onerror)
   //         );
 
   //         // this.messages.push({
