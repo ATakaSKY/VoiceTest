@@ -11,6 +11,7 @@ import {
   FileTransferObject
 } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Storage } from '@ionic/storage';
 
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ClientServiceProvider } from '../../providers/client-service/client-service';
@@ -50,11 +51,12 @@ export class HomePage {
     private transfer: FileTransfer,
     private camera: Camera,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private storage: Storage
   ) {
     this.client = apiAIClientService.getAPIAIClientObject();
 
-    setTimeout(() => this.getWelcomeIntent(), 1500);
+    setTimeout(() => this.getWelcomeIntent(), 2000);
     // this.messages.push({
     //   text: 'DialogFlow at your service?',
     //   sender: 'api'

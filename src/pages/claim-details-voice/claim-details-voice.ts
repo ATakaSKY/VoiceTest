@@ -5,7 +5,8 @@ import {
   NavParams,
   ToastController
 } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import moment from 'moment';
+
 import { ClientServiceProvider } from '../../providers/client-service/client-service';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
@@ -40,6 +41,12 @@ export class ClaimDetailsVoicePage {
   nameOfInjuredText;
   medicalCostFilledText;
 
+  //for border styling
+  isdateFilledBorder: boolean;
+  isDamageAmountFilledBorder: boolean;
+  didAnyoneSufferInjuriesFilledBorder: boolean;
+  isMedicalCostForInjuredBorder: boolean;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,8 +54,7 @@ export class ClaimDetailsVoicePage {
     private apiAIClientService: ClientServiceProvider,
     private speechRecognition: SpeechRecognition,
     private tts: TextToSpeech,
-    public toastCtrl: ToastController,
-    private storage: Storage
+    public toastCtrl: ToastController
   ) {
     this.client = apiAIClientService.getAPIAIClientObject();
     //this.resultFromIncidentPage = navParams.get('policySelected');
@@ -58,6 +64,11 @@ export class ClaimDetailsVoicePage {
     this.didAnyoneSufferInjuriesFilled = false;
     this.nameOfInjuredPersonFilled = false;
     this.doYouThinkMedicalCostFilled = false;
+
+    this.isdateFilledBorder = false;
+    this.isDamageAmountFilledBorder = false;
+    this.didAnyoneSufferInjuriesFilledBorder = false;
+    this.isMedicalCostForInjuredBorder = false;
   }
 
   displayToast(msg) {
@@ -97,7 +108,7 @@ export class ClaimDetailsVoicePage {
                   .catch((reason: any) => this.displayToast(reason));
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
-                this.displayToast(whatHappenedResponse);
+                //this.displayToast(whatHappenedResponse);
                 alert(123);
                 alert(whatHappenedResponse.speech);
                 alert(whatHappenedResponse.date);
@@ -116,11 +127,17 @@ export class ClaimDetailsVoicePage {
                     })
                     .catch((reason: any) => this.displayToast(reason));
                 } else {
-                  this.storage.set('LossUpdate', whatHappenedResponse.date);
-                  this.dateofAccident = whatHappenedResponse.date;
+                  this.dateofAccident = moment
+                    .parseZone(whatHappenedResponse.date)
+                    .format('DD-MMM-YY');
+
+                  localStorage.setItem('LossUpdate', whatHappenedResponse.date);
+                  //this.dateofAccident = whatHappenedResponse.date;
                   this.damageAmountText = whatHappenedResponse.speech;
                   this.isdateFilled = true;
                   this.fillDate = false;
+                  this.isdateFilledBorder = true;
+
                   //whatHappenedResponse.date; // save this in localForage later
 
                   this.tts
@@ -181,7 +198,7 @@ export class ClaimDetailsVoicePage {
                   .catch((reason: any) => this.displayToast(reason));
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
-                this.displayToast(whatHappenedResponse);
+                //this.displayToast(whatHappenedResponse);
                 alert(123);
                 alert(whatHappenedResponse.speech);
                 alert(whatHappenedResponse.damageAmount);
@@ -207,8 +224,9 @@ export class ClaimDetailsVoicePage {
                   this.sufferInjuryText = whatHappenedResponse.speech;
                   this.damageAmount = whatHappenedResponse.damageAmount;
                   this.isDamageAmountFilled = true;
+                  this.isDamageAmountFilledBorder = true;
                   this.isdateFilled = false;
-                  this.storage.set(
+                  localStorage.setItem(
                     'EstimatedAmount',
                     whatHappenedResponse.damageAmount
                   );
@@ -252,7 +270,7 @@ export class ClaimDetailsVoicePage {
     this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
-
+        alert(matches[0]);
         this.client.textRequest(matches[0]).then(response => {
           // place your result processing here
           console.log(response);
@@ -271,7 +289,7 @@ export class ClaimDetailsVoicePage {
                   .catch((reason: any) => this.displayToast(reason));
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
-                this.displayToast(whatHappenedResponse);
+                //this.displayToast(whatHappenedResponse);
                 alert(123);
                 alert(whatHappenedResponse.speech);
                 alert(whatHappenedResponse.howMany);
@@ -295,6 +313,7 @@ export class ClaimDetailsVoicePage {
                   this.howManyInjured = whatHappenedResponse.howMany;
                   this.isDamageAmountFilled = false;
                   this.didAnyoneSufferInjuriesFilled = true;
+                  this.didAnyoneSufferInjuriesFilledBorder = true;
 
                   this.tts
                     .speak({
@@ -355,7 +374,7 @@ export class ClaimDetailsVoicePage {
                   .catch((reason: any) => this.displayToast(reason));
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
-                this.displayToast(whatHappenedResponse);
+                //this.displayToast(whatHappenedResponse);
                 alert(123);
                 alert(whatHappenedResponse.speech);
                 alert(whatHappenedResponse.nameOfInjured);
@@ -380,11 +399,15 @@ export class ClaimDetailsVoicePage {
 
                 this.medicalCostFilledText = `Are the medical costs for ${matchName} less than $2500 or more than $2500?`;
                 //this.nameOfInjured = whatHappenedResponse.nameOfInjured;
-                this.storage.set('InjuredPerson', whatHappenedResponse.date);
-                this.storage.set('Description', 'Property Damage');
+                localStorage.setItem(
+                  'InjuredPerson',
+                  whatHappenedResponse.date
+                );
+                localStorage.setItem('Description', 'Property Damage');
                 this.nameOfInjured = matchName;
                 this.didAnyoneSufferInjuriesFilled = false;
                 this.isMedicalCostForInjured = true;
+                this.isDamageAmountFilledBorder = true;
 
                 this.tts
                   .speak({
@@ -424,7 +447,7 @@ export class ClaimDetailsVoicePage {
     this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
-
+        alert(matches[0]);
         this.client.textRequest(matches[0]).then(response => {
           // place your result processing here
           console.log(response);
@@ -443,20 +466,20 @@ export class ClaimDetailsVoicePage {
                   .catch((reason: any) => this.displayToast(reason));
               } else {
                 let whatHappenedResponse = response.result.fulfillment.data;
-                this.displayToast(whatHappenedResponse);
+                //this.displayToast(whatHappenedResponse);
                 alert(123);
                 alert(whatHappenedResponse.speech);
                 alert(whatHappenedResponse.medicalCost);
-                this.storage.remove('EstimatedAmount');
-                this.storage.set(
+                localStorage.removeItem('EstimatedAmount');
+                localStorage.setItem(
                   'EstimatedAmount',
                   whatHappenedResponse.damageAmount
                 );
-                alert(JSON.stringify(this.storage.get('LossCause')));
-                alert(JSON.stringify(this.storage.get('LossUpdate')));
-                alert(JSON.stringify(this.storage.get('InjuredPerson')));
-                alert(JSON.stringify(this.storage.get('Description')));
-                alert(JSON.stringify(this.storage.get('EstimatedAmount')));
+                alert(JSON.stringify(localStorage.getItem('LossCause')));
+                alert(JSON.stringify(localStorage.getItem('LossUpdate')));
+                alert(JSON.stringify(localStorage.getItem('InjuredPerson')));
+                alert(JSON.stringify(localStorage.getItem('Description')));
+                alert(JSON.stringify(localStorage.getItem('EstimatedAmount')));
                 //used to toggle what happened and what happened confirm view
 
                 //medicalCost --- use in localForage
@@ -523,7 +546,7 @@ export class ClaimDetailsVoicePage {
     this.tts
       .speak({
         text: 'When did the incident happen?',
-        locale: 'en-IN',
+        locale: 'en-US',
         rate: 1
       })
       .then(res => {})

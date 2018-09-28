@@ -10,11 +10,11 @@
 
 <ion-content padding>
 
-  <ion-fab bottom right *ngIf="welcomeIntentFinished">
+  <!-- <ion-fab bottom right *ngIf="welcomeIntentFinished">
     <button ion-fab color="danger" (click)="feature()">
       <ion-icon name="mic"></ion-icon>
     </button>
-  </ion-fab>
+  </ion-fab> -->
 
   <ion-card class="home-image">
     <img src="../assets/imgs/home.jpg" />
@@ -26,13 +26,10 @@
 
   </ion-item>
 
-  <button class="home-button" (click)="goToClaimsPage()" ion-button full>Manage Account</button>
-
-  <button class="home-button" ion-button block>Premium Payment</button>
+  <button class="home-button" ion-button full>Manage Account</button>
 
   <button class="home-button" (click)="feature()" ion-button full>Initiate Claim</button>
 
-  <button class="home-button" ion-button block>Claim Status</button>
 
 </ion-content>
 

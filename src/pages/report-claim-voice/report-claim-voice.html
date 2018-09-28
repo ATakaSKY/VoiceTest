@@ -1,13 +1,13 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Report Claim</ion-title>
+    <ion-title>
+      Easy Insurance
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="content">
 
   <ion-fab bottom right>
     <button ion-fab color="danger" (click)="sendVoice()">
@@ -16,7 +16,7 @@
   </ion-fab>
 
 
-  <ion-card>
+  <!-- <ion-card>
     <ion-card-header>
       Policy Details
     </ion-card-header>
@@ -34,8 +34,20 @@
     </ion-card-content>
 
 
-  </ion-card>
+  </ion-card> -->
+  <ion-item style="background: gray">
+    {{policyText}}
+  </ion-item>
 
-  <!-- <button ion-button block (click)="goToWhatHappened()">Continue</button> -->
+  <ion-list radio-group>
+
+    <ion-item style="background: gray" *ngFor=" let option of policyOptions ">
+      <ion-label>{{option}}</ion-label>
+      <ion-radio value="{{option}} "></ion-radio>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- <button ion-button block (click)="goToWhatHappened() ">Continue</button> -->
 
 </ion-content>

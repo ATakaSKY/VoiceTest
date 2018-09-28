@@ -55,7 +55,7 @@ export class AccidentDetailsVoicePage {
     this.tts
       .speak({
         text: this.selectedPolicyText,
-        locale: 'en-IN',
+        locale: 'en-US',
         rate: 1
       })
       .then(() => {

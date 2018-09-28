@@ -5,7 +5,6 @@ import {
   NavParams,
   ToastController
 } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 import { ClientServiceProvider } from '../../providers/client-service/client-service';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { AccidentDetailsVoicePage } from '../accident-details-voice/accident-details-voice';
@@ -36,8 +35,7 @@ export class ReportClaimVoicePage {
     private speechRecognition: SpeechRecognition,
     private ngZone: NgZone,
     private tts: TextToSpeech,
-    public toastCtrl: ToastController,
-    private storage: Storage
+    public toastCtrl: ToastController
   ) {
     this.client = apiAIClientService.getAPIAIClientObject();
     this.policyResponse = navParams.get('policyResponse');
@@ -94,7 +92,7 @@ export class ReportClaimVoicePage {
         alert(findPolicyIfExist);
 
         if (findPolicyIfExist) {
-          this.storage.set('LossCause', findPolicyIfExist);
+          localStorage.setItem('LossCause', findPolicyIfExist);
           this.navCtrl.push(AccidentDetailsVoicePage, {
             policySelected: matches[0]
           });

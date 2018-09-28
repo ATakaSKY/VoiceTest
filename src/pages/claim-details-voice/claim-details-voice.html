@@ -1,9 +1,13 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Claim Details</ion-title>
-  </ion-navbar>
+    <ion-row>
+      <ion-icon class="navbaricon" md="md-menu"></ion-icon>
+      <ion-title>
+        Easy Insurance
+      </ion-title>
+    </ion-row>
 
+  </ion-navbar>
 </ion-header>
 
 
@@ -40,51 +44,76 @@
   </ion-fab>
 
   <ion-grid>
-    <ion-row>
+    <ion-row class="border-questions">
       <ion-col col-md-6>
         Date of Accident?
       </ion-col>
-      <ion-col col-md-6>
+      <ion-col col-md-6 class="answer-details">
         {{dateofAccident}}
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row [ngClass]="{'border-questions':isdateFilledBorder}">
       <ion-col col-md-6>
         {{damageAmountText}}
       </ion-col>
-      <ion-col col-md-6>
+      <ion-col col-md-6 class="answer-details">
         {{damageAmount}}
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row [ngClass]="{'border-questions':isDamageAmountFilledBorder}">
       <ion-col col-md-6>
         {{sufferInjuryText}}
       </ion-col>
-      <ion-col col-md-6>
+      <ion-col col-md-6 class="answer-details">
         {{howManyInjured}}
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row [ngClass]="{'border-questions':didAnyoneSufferInjuriesFilledBorder}">
       <ion-col col-md-6>
         {{nameOfInjuredText}}
       </ion-col>
-      <ion-col col-md-6>
+      <ion-col col-md-6 class="answer-details">
         {{nameOfInjured}}
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row [ngClass]="{'border-questions':isMedicalCostForInjuredBorder}">
       <ion-col col-md-6>
         {{medicalCostFilledText}}
       </ion-col>
-      <ion-col col-md-6>
+      <ion-col col-md-6 class="answer-details">
         {{medicalCostFilled}}
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
+  <!-- 
   <ion-grid>
+
+    <ion-item style="background: gray ; color:white">
+      Date of Accident? : <span class="answer-details"> {{dateofAccident}}</span>
+    </ion-item>
+
+    <ion-item style="background: gray ; color:white">
+      {{damageAmountText}} : <span class="answer-details"> {{damageAmount}}</span>
+    </ion-item>
+
+    <ion-item style="background: gray ; color:white">
+      {{sufferInjuryText}} : <span class="answer-details">{{howManyInjured}}</span>
+    </ion-item>
+
+    <ion-item style="background: gray ; color:white">
+      {{nameOfInjuredText}} : <span class="answer-details">{{nameOfInjured}}</span>
+    </ion-item>
+
+    <ion-item style="background: gray ; color:white">
+      {{medicalCostFilledText}} : <span class="answer-details"> {{medicalCostFilled}} </span>
+    </ion-item>
+
+
+
+  </ion-grid> -->
+
+  <!-- <ion-grid>
     <ion-col>
       <ion-row>
         <ion-col col-md-6>
@@ -100,7 +129,13 @@
         </ion-col>
       </ion-row>
     </ion-col>
-  </ion-grid>
+  </ion-grid> -->
+  <!-- <ion-row>
+
+    <button style="color: #f53d3d " class="home-button" ion-button full>Danger</button>
+
+    <button class="home-button" ion-button block>Success</button>
+  </ion-row> -->
 
   <!-- <button ion-button block color="default" (click)="submitClaim()">Submit Claim</button> -->
 </ion-content>
