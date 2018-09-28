@@ -3,10 +3,12 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController
+  LoadingController,
+  ToastController
 } from 'ionic-angular';
 import { ClientServiceProvider } from '../../providers/client-service/client-service';
 import { AccidentDetailsPage } from '../accident-details/accident-details';
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 @IonicPage()
 @Component({
@@ -23,7 +25,9 @@ export class ReportClaimPage {
     public navParams: NavParams,
     private ngZone: NgZone,
     private apiAIClientService: ClientServiceProvider,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private tts: TextToSpeech,
+    public toastCtrl: ToastController
   ) {
     this.client = apiAIClientService.getAPIAIClientObject();
     this.initializeClaimsPage();
@@ -43,17 +47,46 @@ export class ReportClaimPage {
         console.log(response);
         this.ngZone.run(() => {
           loading.dismiss();
-          let formattedResponse = JSON.parse(
-            response.result.fulfillment.speech
-          );
-          this.policyText = formattedResponse.text;
-          this.policyOptions = formattedResponse.policies;
+
+          if (response.result.fulfillment.speech !== '') {
+            console.log(response.result.fulfillment.speech);
+            //TEXT VERSION WONT HAVE A TYUPING MISTAKE
+            // this.tts
+            //   .speak({
+            //     text: response,
+            //     locale: 'en-US',
+            //     rate: 1
+            //   })
+            //   .then(() => {
+            //     //this.func();
+            //   })
+            //   .catch((reason: any) => this.displayToast(reason));
+          } else {
+            let formattedResponse = response.result.fulfillment.data;
+
+            this.policyText = formattedResponse.text;
+            this.policyOptions = formattedResponse.policies;
+          }
         });
       },
       error => {
-        alert(error);
+        this.displayToast(error);
       }
     );
+  }
+
+  displayToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
   ionViewDidLoad() {

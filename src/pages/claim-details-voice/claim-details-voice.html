@@ -1,13 +1,7 @@
-<!--
-  Generated template for the ClaimDetailsVoicePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>claim-details-voice</ion-title>
+    <ion-title>Claim Details</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +9,98 @@
 
 <ion-content padding>
 
+  <ion-fab bottom right *ngIf="fillDate">
+    <button ion-fab color="danger" (click)="sendDate()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom right *ngIf="isdateFilled">
+    <button ion-fab color="danger" (click)="sendDamageAmount()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom right *ngIf="isDamageAmountFilled">
+    <button ion-fab color="danger" (click)="sendDidAnyoneSufferInjury()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom right *ngIf="didAnyoneSufferInjuriesFilled">
+    <button ion-fab color="danger" (click)="sendNameOfInjured()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom right *ngIf="isMedicalCostForInjured">
+    <button ion-fab color="danger" (click)="sendMedicalCostForInjured()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-md-6>
+        Date of Accident?
+      </ion-col>
+      <ion-col col-md-6>
+        {{dateofAccident}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-md-6>
+        {{damageAmountText}}
+      </ion-col>
+      <ion-col col-md-6>
+        {{damageAmount}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-md-6>
+        {{sufferInjuryText}}
+      </ion-col>
+      <ion-col col-md-6>
+        {{howManyInjured}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-md-6>
+        {{nameOfInjuredText}}
+      </ion-col>
+      <ion-col col-md-6>
+        {{nameOfInjured}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-md-6>
+        {{medicalCostFilledText}}
+      </ion-col>
+      <ion-col col-md-6>
+        {{medicalCostFilled}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <ion-col col-md-6>
+          <ion-chip color="danger">
+            <ion-label>Danger</ion-label>
+          </ion-chip>
+        </ion-col>
+
+        <ion-col col-md-6>
+          <ion-chip color="danger">
+            <ion-label>Success</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+
+  <!-- <button ion-button block color="default" (click)="submitClaim()">Submit Claim</button> -->
 </ion-content>

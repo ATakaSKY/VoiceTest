@@ -4,6 +4,15 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { HttpClientModule } from '@angular/common/http';
+import {
+  FileTransfer,
+  FileUploadOptions,
+  FileTransferObject
+} from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { Camera } from '@ionic-native/camera';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -23,6 +32,7 @@ import { ClaimDetailsVoicePageModule } from '../pages/claim-details-voice/claim-
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AccidentDetailsPageModule,
     UploadPicturePageModule,
     ReportClaimPageModule,
@@ -30,7 +40,8 @@ import { ClaimDetailsVoicePageModule } from '../pages/claim-details-voice/claim-
     ClaimSubmissionPageModule,
     ReportClaimVoicePageModule,
     AccidentDetailsVoicePageModule,
-    ClaimDetailsVoicePageModule
+    ClaimDetailsVoicePageModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage],
@@ -40,7 +51,12 @@ import { ClaimDetailsVoicePageModule } from '../pages/claim-details-voice/claim-
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ClientServiceProvider,
     SpeechRecognition,
-    TextToSpeech
+    TextToSpeech,
+    FileTransfer,
+    //FileUploadOptions,
+    FileTransferObject,
+    File,
+    Camera
   ]
 })
 export class AppModule {}

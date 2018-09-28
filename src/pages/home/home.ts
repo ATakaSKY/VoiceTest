@@ -1,5 +1,16 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
-import { NavController, Content } from 'ionic-angular';
+import {
+  NavController,
+  Content,
+  LoadingController,
+  ToastController
+} from 'ionic-angular';
+import {
+  FileTransfer,
+  FileUploadOptions,
+  FileTransferObject
+} from '@ionic-native/file-transfer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ClientServiceProvider } from '../../providers/client-service/client-service';
@@ -19,25 +30,87 @@ export class HomePage {
   policyOptions = [];
   policyText: string;
 
+  imageURI: any;
+  imageFileName: any;
+
   @ViewChild(Content)
   content: Content;
   client: any;
+  welcomeIntentFinished: boolean = false;
+
+  selectedSection; //dont use later
 
   constructor(
     public navCtrl: NavController,
     // private tts: TextToSpeech,
     private ngZone: NgZone,
-    apiAIClientService: ClientServiceProvider,
+    private apiAIClientService: ClientServiceProvider,
     private speechRecognition: SpeechRecognition,
-    private tts: TextToSpeech
+    private tts: TextToSpeech,
+    private transfer: FileTransfer,
+    private camera: Camera,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController
   ) {
     this.client = apiAIClientService.getAPIAIClientObject();
 
-    this.messages.push({
-      text: 'DialogFlow at your service?',
-      sender: 'api'
-    });
+    setTimeout(() => this.getWelcomeIntent(), 1500);
+    // this.messages.push({
+    //   text: 'DialogFlow at your service?',
+    //   sender: 'api'
+    // });
   }
+
+  getWelcomeIntent() {
+    this.tts
+      .speak({
+        text:
+          "Welcome to the test version of Talking Helper.Hello John! Welcome to Deloitte's Talking Insurance. How can I help you today?",
+        locale: 'en-US',
+        rate: 1
+      })
+      .then(() => {
+        this.welcomeIntentFinished = true;
+      });
+  }
+
+  getImage() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.imageURI = imageData;
+      },
+      err => {
+        console.log(err);
+        this.presentToast(err);
+      }
+    );
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
+  // callTest() {
+  //   this.apiAIClientService.getTestData().subscribe(data => {
+  //     console.log(data);
+  //   });
+  // }
 
   goToClaimsPage() {
     this.navCtrl.push(ReportClaimPage);
@@ -85,25 +158,6 @@ export class HomePage {
     );
   }
 
-  // sendVoice() {
-  //   window['ApiAIPlugin'].requestVoice(
-  //     {},
-  //     response => {
-  //       // alert(JSON.stringify(response));
-  //       // place your result processing here
-  //       this.tts.speak({
-  //         text: response.result.fulfillment.speech,
-  //         locale: 'en-IN',
-  //         rate: 1
-  //       });
-  //     },
-  //     error => {
-  //       // place your error processing here
-  //       alert(error);
-  //     }
-  //   );
-  // }
-
   async feature() {
     // Check feature available
     const speechRecognitionAvailable = await this.speechRecognition.isRecognitionAvailable();
@@ -143,57 +197,58 @@ export class HomePage {
       (matches: Array<string>) => {
         alert(JSON.stringify(matches[0]));
 
-        this.client.textRequest(matches[0]).then(response => {
-          // place your result processing here
-          console.log(response);
-          this.ngZone.run(
-            () => {
-              let formattedResponse = JSON.parse(
-                response.result.fulfillment.speech
-              );
-              this.policyText = formattedResponse.text;
-              this.policyOptions = formattedResponse.policies;
-
-              this.tts
-                .speak({
-                  text: this.policyText,
-                  locale: 'en-IN',
-                  rate: 1
-                })
-                .then(() =>
-                  this.navCtrl.push(ReportClaimVoicePage, {
-                    policyOptions: this.policyOptions
-                  })
-                )
-                .catch((reason: any) => alert(reason));
-            },
-            onerror => alert(JSON.stringify(onerror))
-          );
-
-          // this.messages.push({
-          //   text: response.result.fulfillment.speech,
-          //   sender: 'api'
-          // });
-        });
-        //let dimensions = this.content.getContentDimensions();
-        //this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
+        this.hearPolicy(matches[0]);
       },
       error => {
         // place your error processing here
         alert(error);
       }
     );
+  }
 
-    //     this.tts
-    //       .speak({
-    //         text: matches[0],
-    //         locale: 'en-IN',
-    //         rate: 1
-    //       })
-    //       .then(() => alert('Success'))
-    //       .catch((reason: any) => alert(reason));
-    //   },
-    //   onerror => alert(JSON.stringify(onerror))
-    // );
+  async hearPolicy(match) {
+    this.client.textRequest(match).then(response => {
+      // place your result processing here
+      console.log(response);
+      this.ngZone.run(
+        () => {
+          if (response.result.fulfillment.speech !== '') {
+            this.tts
+              .speak({
+                text: response.result.fulfillment.speech,
+                locale: 'en-US',
+                rate: 1
+              })
+              .then(() => {
+                alert(123);
+              })
+              .catch((reason: any) => this.displayToast(reason));
+          } else {
+            let formattedResponse = response.result.fulfillment.data;
+
+            this.navCtrl.push(ReportClaimVoicePage, {
+              policyResponse: formattedResponse
+            });
+          }
+        },
+        onerror => {
+          this.displayToast(onerror);
+        }
+      );
+    });
+  }
+
+  displayToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 }

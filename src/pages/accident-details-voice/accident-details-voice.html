@@ -16,28 +16,33 @@
 
 <ion-content padding>
 
+  <ion-fab bottom right *ngIf="whatHappenedView">
+    <button ion-fab color="danger" (click)="sendVoice()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom right *ngIf="!whatHappenedView">
+    <button ion-fab color="danger" (click)="getWhatHappenedConfirmAndGoToClaimDetails()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
   <ion-list>
-    <ion-item>
-      <ion-label>What happened?</ion-label>
+    <ion-item *ngIf="whatHappenedView">
+      <ion-label>{{selectedPolicyText}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="!whatHappenedView">
+      <ion-label>{{whatHappenedConfirmText}}</ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-list radio-group *ngIf="showYesNo">
+  <ion-list radio-group *ngIf="!whatHappenedView">
 
-    <!-- <ion-item *ngFor="let option of yesNoOptions">
+    <ion-item *ngFor="let option of yesNoOptions">
       <ion-label>{{option}}</ion-label>
       <ion-radio value="{{option}}"></ion-radio>
-    </ion-item> -->
-
-    <!-- <ion-item>
-      <ion-label>Rust</ion-label>
-      <ion-radio value="rust"></ion-radio>
     </ion-item>
-
-    <ion-item>
-      <ion-label>Python</ion-label>
-      <ion-radio value="python"></ion-radio>
-    </ion-item> -->
   </ion-list>
 
   <!-- <button ion-button block color="default" (click)="goToUploadPicture()">Continue</button> -->

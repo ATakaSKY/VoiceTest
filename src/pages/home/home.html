@@ -1,20 +1,77 @@
 <ion-header>
   <ion-navbar>
+    <ion-icon style="font-size: 25px;color:white" md="md-menu"></ion-icon>
     <ion-title>
-      <button ion-button color="secondary" (click)="goToClaimsPage()">Report a Claim Text</button>
-      <button ion-button color="secondary" (click)="feature()">Say Report a Claim</button>
+      Easy Insurance
     </ion-title>
+
   </ion-navbar>
 </ion-header>
 
-<ion-content padding hidden>
-  <!-- <ion-fab bottom right>
+<ion-content padding>
+
+  <ion-fab bottom right *ngIf="welcomeIntentFinished">
+    <button ion-fab color="danger" (click)="feature()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-card class="home-image">
+    <img src="../assets/imgs/home.jpg" />
+
+  </ion-card>
+
+  <ion-item>
+    Welcome Jhon
+
+  </ion-item>
+
+  <button class="home-button" (click)="goToClaimsPage()" ion-button full>Manage Account</button>
+
+  <button class="home-button" ion-button block>Premium Payment</button>
+
+  <button class="home-button" (click)="feature()" ion-button full>Initiate Claim</button>
+
+  <button class="home-button" ion-button block>Claim Status</button>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="footer">
+    <ion-segment [(ngModel)]="selectedSection" color="light">
+      <ion-segment-button value="tabButtonOne">
+        <ion-icon name="home" style="font-size: 25px ;color:white"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tabButtonTwo">
+        <ion-icon name="md-settings" style="font-size: 25px;color:white"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tabButtonThree">
+        <ion-icon name="md-mail" style="font-size: 25px;color:white"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-footer>
+<!-- <ion-item>
+    <p>{{imageURI}}</p>
+    <button ion-button color="secondary" (click)="getImage()">Get Image</button>
+  </ion-item>
+  <ion-item>
+    <h4>Image Preview</h4>
+    <img src="{{imageURI}}" *ngIf="imageURI" alt="Ionic File" width="300" />
+  </ion-item>
+  <ion-item>
+    <button ion-button (click)="uploadFile()">Upload</button>
+  </ion-item>
+</ion-content> -->
+<!-- <ion-content padding hidden> -->
+<!-- <ion-fab bottom right>
     <button ion-fab color="danger" (click)="sendVoice()">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab> -->
 
-  <!-- <ion-list no-lines class="chat-list">
+<!-- <ion-list no-lines class="chat-list">
     <ion-item *ngFor="let message of messages" class="chat-item" text-wrap>
       <ion-avatar item-left *ngIf="message.sender == 'api'">
         <img src="assets/apiai.png" alt="">
@@ -45,5 +102,5 @@
       </button>
     </ion-item>
   </ion-toolbar> -->
-  <!-- </ion-footer> -->
-</ion-content>
+<!-- </ion-footer> -->
+<!-- </ion-content> -->

@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ReportClaimPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,12 +8,20 @@
 
 
 <ion-content padding>
+
+  <ion-fab bottom right>
+    <button ion-fab color="danger" (click)="sendVoice()">
+      <ion-icon name="mic"></ion-icon>
+    </button>
+  </ion-fab>
+
+
   <ion-card>
     <ion-card-header>
       Policy Details
     </ion-card-header>
     <ion-card-content>
-      <!-- {{policyText}} -->
+      {{policyText}}
 
       <ion-list radio-group>
 
@@ -28,15 +30,6 @@
           <ion-radio value="{{option}}"></ion-radio>
         </ion-item>
 
-        <!-- <ion-item>
-          <ion-label>Rust</ion-label>
-          <ion-radio value="rust"></ion-radio>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Python</ion-label>
-          <ion-radio value="python"></ion-radio>
-        </ion-item> -->
       </ion-list>
     </ion-card-content>
 
