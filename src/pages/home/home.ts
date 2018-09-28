@@ -195,7 +195,7 @@ export class HomePage {
 
   startListening() {
     // Start the recognition process
-    this.speechRecognition.startListening({}).subscribe(
+    this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
         //alert(JSON.stringify(matches[0]));
 
