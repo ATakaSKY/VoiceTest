@@ -1,35 +1,35 @@
 <ion-header>
   <ion-navbar>
-    <ion-icon style="font-size: 25px;color:white" md="md-menu"></ion-icon>
-    <ion-title>
-      Easy Insurance
-    </ion-title>
-
+    <ion-row>
+      <ion-icon class="navbaricon" md="md-menu"></ion-icon>
+      <ion-title>
+        EasyPnc Insurance
+      </ion-title>
+    </ion-row>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <!-- <ion-fab bottom right *ngIf="welcomeIntentFinished">
-    <button ion-fab color="danger" (click)="feature()">
+  <ion-fab bottom right>
+    <button ion-fab color="danger" [disabled]="!welcomeIntentFinished" (click)="voiceClaim()">
       <ion-icon name="mic"></ion-icon>
     </button>
-  </ion-fab> -->
+  </ion-fab>
 
-  <ion-card class="home-image">
-    <img src="../assets/imgs/home.jpg" />
+  <!-- <img src="../assets/imgs/Insure.jpg" [height]="240" /> -->
+  <div class="home-image"></div>
 
-  </ion-card>
+  <!-- <ion-item style="background: rgb(202, 200, 200);margin-top: 15px;margin-left: 10px;margin-right: 10px"> -->
+  <div class="userNameStyle">Welcome John</div>
+  <!-- </ion-item> -->
 
-  <ion-item>
-    Welcome Jhon
+  <!-- [disabled]="!welcomeIntentFinished" -->
+  <button class="home-button" [disabled]="!welcomeIntentFinished" ion-button full>Manage Account</button>
 
-  </ion-item>
+  <!-- <button class="home-button" [disabled]="!welcomeIntentFinished" (click)="voiceClaim()" ion-button full>Initiate Claim</button> -->
 
-  <button class="home-button" ion-button full>Manage Account</button>
-
-  <button class="home-button" (click)="feature()" ion-button full>Initiate Claim</button>
-
+  <button class="home-button" [disabled]="!welcomeIntentFinished" (click)="claimStatus()" ion-button full>Claim Status</button>
 
 </ion-content>
 

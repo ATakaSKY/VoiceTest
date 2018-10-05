@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      EasyPnc Insurance
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="content">
+
+  <ion-grid *ngIf="!noClaimsData">
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Location
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        615 Broad Street
+      </ion-col>
+    </ion-row>
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Claim Type
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        Claim Type
+      </ion-col>
+    </ion-row>
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Loss Type
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        {{description}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Incident Date
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        {{lossDate}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Damage Incurred
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        {{damageAmount}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Injured Count
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        {{howManyInjured}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="border-bottom" *ngIf="!hideInjuredDetails">
+      <ion-col col-md-6>
+        Injured Name
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        {{injuredPerson}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="border-bottom" *ngIf="!hideInjuredDetails">
+      <ion-col col-md-6>
+        Medical Cost
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        {{medicalCost}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Claim Number
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        190007801
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="border-bottom">
+      <ion-col col-md-6>
+        Claim Status
+      </ion-col>
+      <ion-col col-md-6 class="userDataStyle">
+        Pending
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <div style="position: relative;top: 40%" *ngIf="noClaimsData">
+    <p style="color:#ccc; font-size:2rem;background: gray;text-align: center;">There is no claim information.
+    </p>
+
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="footer">
+    <ion-segment [(ngModel)]="selectedSection" color="light">
+      <ion-segment-button value="tabButtonOne" (click)="goToHome()">
+        <ion-icon name="home" style="font-size: 25px ;color:white"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tabButtonTwo">
+        <ion-icon name="md-settings" style="font-size: 25px;color:white"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tabButtonThree">
+        <ion-icon name="md-mail" style="font-size: 25px;color:white"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-footer>

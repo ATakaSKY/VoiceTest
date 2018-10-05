@@ -1,0 +1,33 @@
+page-claim-status {
+  .content {
+    background: gray;
+  }
+
+  .scroll-content {
+    padding: 12px;
+  }
+
+  .userDataStyle {
+    font-weight: bold;
+    color: black;
+  }
+
+  .question {
+    background: gray;
+    color: white;
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid #ccc;
+  }
+
+  ion-row {
+    font-size: 1.8rem;
+    padding-bottom: 8px;
+    color: #ddd;
+  }
+
+  .back-button.show-back-button {
+    display: none;
+  }
+}

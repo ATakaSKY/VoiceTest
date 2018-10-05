@@ -5,19 +5,13 @@ import {
   LoadingController,
   ToastController
 } from 'ionic-angular';
-import {
-  FileTransfer,
-  FileUploadOptions,
-  FileTransferObject
-} from '@ionic-native/file-transfer';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { Storage } from '@ionic/storage';
 
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ClientServiceProvider } from '../../providers/client-service/client-service';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { ReportClaimPage } from '../report-claim/report-claim';
 import { ReportClaimVoicePage } from '../report-claim-voice/report-claim-voice';
+import { ClaimStatusPage } from '../claim-status/claim-status';
 
 declare var window;
 
@@ -48,26 +42,21 @@ export class HomePage {
     private apiAIClientService: ClientServiceProvider,
     private speechRecognition: SpeechRecognition,
     private tts: TextToSpeech,
-    private transfer: FileTransfer,
-    private camera: Camera,
-    public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController,
-    private storage: Storage
+    // private transfer: FileTransfer,
+    // private camera: Camera,
+    public loadingCtrl: LoadingController // private storage: Storage
   ) {
     this.client = apiAIClientService.getAPIAIClientObject();
+  }
 
-    setTimeout(() => this.getWelcomeIntent(), 2000);
-    // this.messages.push({
-    //   text: 'DialogFlow at your service?',
-    //   sender: 'api'
-    // });
+  claimStatus() {
+    this.navCtrl.push(ClaimStatusPage);
   }
 
   getWelcomeIntent() {
     this.tts
       .speak({
-        text:
-          "Welcome to the test version of Talking Helper.Hello John! Welcome to Deloitte's Talking Insurance. How can I help you today?",
+        text: 'Hello John. Welcome to talk insure. How can I help you today.',
         locale: 'en-US',
         rate: 1
       })
@@ -76,46 +65,30 @@ export class HomePage {
       });
   }
 
-  getImage() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-    };
+  // getImage() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     destinationType: this.camera.DestinationType.FILE_URI,
+  //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+  //   };
 
-    this.camera.getPicture(options).then(
-      imageData => {
-        this.imageURI = imageData;
-      },
-      err => {
-        console.log(err);
-        this.presentToast(err);
-      }
-    );
-  }
-
-  presentToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'bottom'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
-  }
-
-  // callTest() {
-  //   this.apiAIClientService.getTestData().subscribe(data => {
-  //     console.log(data);
-  //   });
+  //   this.camera.getPicture(options).then(
+  //     imageData => {
+  //       this.imageURI = imageData;
+  //     },
+  //     err => {
+  //       console.log(err);
+  //       this.apiAIClientService.displayToast(err);
+  //     }
+  //   );
   // }
 
   goToClaimsPage() {
     this.navCtrl.push(ReportClaimPage);
+  }
+
+  ionViewDidLoad() {
+    setTimeout(() => this.getWelcomeIntent(), 500);
   }
 
   featureAvailable() {
@@ -155,12 +128,12 @@ export class HomePage {
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.apiAIClientService.displayToast(error);
       }
     );
   }
 
-  async feature() {
+  async voiceClaim() {
     // Check feature available
     const speechRecognitionAvailable = await this.speechRecognition.isRecognitionAvailable();
 
@@ -177,7 +150,7 @@ export class HomePage {
         this.hasPermission();
       }
     } catch (e) {
-      alert(e);
+      this.apiAIClientService.displayToast(e);
     }
   }
 
@@ -189,7 +162,7 @@ export class HomePage {
         this.startListening();
       }
     } catch (e) {
-      alert(e);
+      this.apiAIClientService.displayToast(e);
     }
   }
 
@@ -197,60 +170,48 @@ export class HomePage {
     // Start the recognition process
     this.speechRecognition.startListening({ showPopup: false }).subscribe(
       (matches: Array<string>) => {
-        //alert(JSON.stringify(matches[0]));
+        // alert(matches[0]);
 
         this.hearPolicy(matches[0]);
       },
       error => {
         // place your error processing here
-        alert(error);
+        this.apiAIClientService.displayToast(error);
       }
     );
   }
 
   async hearPolicy(match) {
+    this.apiAIClientService.showLoading();
+
     this.client.textRequest(match).then(response => {
       // place your result processing here
       console.log(response);
       this.ngZone.run(
         () => {
+          this.apiAIClientService.stopLoadingSpinner();
           if (response.result.fulfillment.speech !== '') {
-            this.tts
-              .speak({
-                text: response.result.fulfillment.speech,
-                locale: 'en-US',
-                rate: 1
-              })
-              .then(() => {
-                //alert(123);
-              })
-              .catch((reason: any) => this.displayToast(reason));
+            this.apiAIClientService.speakResponse(
+              response.result.fulfillment.speech
+            );
           } else {
             let formattedResponse = response.result.fulfillment.data;
 
-            this.navCtrl.push(ReportClaimVoicePage, {
-              policyResponse: formattedResponse
-            });
+            if (formattedResponse.context === 'report_claim_context') {
+              this.navCtrl.push(ReportClaimVoicePage, {
+                policyResponse: formattedResponse
+              });
+            } else {
+              this.apiAIClientService.speakResponse(
+                "I didn't get that. Can you say that again."
+              );
+            }
           }
         },
         onerror => {
-          this.displayToast(onerror);
+          this.apiAIClientService.displayToast(onerror);
         }
       );
     });
-  }
-
-  displayToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'bottom'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
   }
 }

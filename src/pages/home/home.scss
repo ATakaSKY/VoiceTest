@@ -14,27 +14,48 @@ page-home {
     background: gray;
   }
 
-  .home-background {
-    background: url('../assets/imgs/home.jpg') no-repeat fixed center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
+  .navbaricon {
+    padding: 0 12px;
+    font-size: 3rem !important;
+    font-weight: 500;
+    color: #08b958 !important;
+    text-align: center;
+    font-size: 25px;
   }
 
   .home-button {
     background-color: rgb(59, 56, 56);
     color: rgb(29, 177, 236);
-  }
-
-  .home-image {
-    position: relative;
-    width: 100% !important;
-    left: calc(-50vw + 50%);
-  }
-
-  .home-button {
     width: 75% !important;
     left: 42px;
     top: 11px;
+  }
+
+  // .home-image {
+  //   position: relative;
+  //   width: 100% !important;
+  //   left: calc(-50vw + 50%);
+  // }
+
+  .home-image {
+    background: url(../assets/imgs/Insure.jpg);
+    background-repeat: no-repeat;
+    height: 240px;
+    width: 100%;
+    background-size: cover;
+  }
+  .scroll-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .userNameStyle {
+    margin-left: 10px;
+    margin-right: 10px;
+    background: rgb(202, 200, 200);
+    margin-top: 15px;
+    padding: 14px;
+    font-size: 1.8rem;
+    font-weight: bolder;
   }
 }

@@ -1,8 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Easy Insurance
-    </ion-title>
+    <ion-row>
+      <ion-icon class="navbaricon" md="md-menu"></ion-icon>
+      <ion-title>
+        EasyPnc Insurance
+      </ion-title>
+    </ion-row>
   </ion-navbar>
 </ion-header>
 
@@ -10,7 +13,7 @@
 <ion-content padding class="content">
 
   <ion-fab bottom right>
-    <button ion-fab color="danger" (click)="sendVoice()">
+    <button ion-fab color="danger" [disabled]="isSpeaking" (click)="sendVoice()">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>

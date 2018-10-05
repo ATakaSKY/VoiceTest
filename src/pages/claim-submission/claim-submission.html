@@ -1,9 +1,12 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Confirmation</ion-title>
+    <ion-row>
+      <ion-icon class="navbaricon" md="md-menu"></ion-icon>
+      <ion-title>
+        EasyPnc Insurance
+      </ion-title>
+    </ion-row>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -13,7 +16,24 @@
     <div class="circle-loader load-complete">
       <div class="checkmark draw"></div>
     </div>
-    <!-- <p>Thank you for submitting the claim, please note down this reference number 18898823001. <br/> Click on ir to make
-      the change <a>18898823001</a></p> -->
+    <p>Thank you for submitting the claim, please note down this reference number {{refNumber}}. <br/> Click on it to check
+      the status <a (click)="goToClaimStatus()">{{refNumber}}</a></p>
   </ion-item>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="footer">
+    <ion-segment [(ngModel)]="selectedSection" color="light">
+      <ion-segment-button value="tabButtonOne" (click)="goToHome()">
+        <ion-icon name="home" style="font-size: 25px ;color:white"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tabButtonTwo">
+        <ion-icon name="md-settings" style="font-size: 25px;color:white"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tabButtonThree">
+        <ion-icon name="md-mail" style="font-size: 25px;color:white"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-footer>

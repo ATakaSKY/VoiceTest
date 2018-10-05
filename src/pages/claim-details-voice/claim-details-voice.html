@@ -3,10 +3,9 @@
     <ion-row>
       <ion-icon class="navbaricon" md="md-menu"></ion-icon>
       <ion-title>
-        Easy Insurance
+        EasyPnc Insurance
       </ion-title>
     </ion-row>
-
   </ion-navbar>
 </ion-header>
 
@@ -14,31 +13,31 @@
 <ion-content padding>
 
   <ion-fab bottom right *ngIf="fillDate">
-    <button ion-fab color="danger" (click)="sendDate()">
+    <button ion-fab color="danger" [disabled]="isSpeaking" (click)="sendDate()">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>
 
   <ion-fab bottom right *ngIf="isdateFilled">
-    <button ion-fab color="danger" (click)="sendDamageAmount()">
+    <button ion-fab color="danger" [disabled]="isSpeaking" (click)="sendDamageAmount()">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>
 
   <ion-fab bottom right *ngIf="isDamageAmountFilled">
-    <button ion-fab color="danger" (click)="sendDidAnyoneSufferInjury()">
+    <button ion-fab color="danger" [disabled]="isSpeaking" (click)="sendDidAnyoneSufferInjury()">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>
 
   <ion-fab bottom right *ngIf="didAnyoneSufferInjuriesFilled">
-    <button ion-fab color="danger" (click)="sendNameOfInjured()">
+    <button ion-fab color="danger" [disabled]="isSpeaking" (click)="sendNameOfInjured()">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>
 
   <ion-fab bottom right *ngIf="isMedicalCostForInjured">
-    <button ion-fab color="danger" (click)="sendMedicalCostForInjured()">
+    <button ion-fab color="danger" [disabled]="isSpeaking" (click)="sendMedicalCostForInjured()">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-fab>
@@ -86,32 +85,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!-- 
-  <ion-grid>
 
-    <ion-item style="background: gray ; color:white">
-      Date of Accident? : <span class="answer-details"> {{dateofAccident}}</span>
-    </ion-item>
-
-    <ion-item style="background: gray ; color:white">
-      {{damageAmountText}} : <span class="answer-details"> {{damageAmount}}</span>
-    </ion-item>
-
-    <ion-item style="background: gray ; color:white">
-      {{sufferInjuryText}} : <span class="answer-details">{{howManyInjured}}</span>
-    </ion-item>
-
-    <ion-item style="background: gray ; color:white">
-      {{nameOfInjuredText}} : <span class="answer-details">{{nameOfInjured}}</span>
-    </ion-item>
-
-    <ion-item style="background: gray ; color:white">
-      {{medicalCostFilledText}} : <span class="answer-details"> {{medicalCostFilled}} </span>
-    </ion-item>
-
-
-
-  </ion-grid> -->
 
   <!-- <ion-grid>
     <ion-col>

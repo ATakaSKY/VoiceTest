@@ -9,6 +9,7 @@ import { ClientServiceProvider } from '../../providers/client-service/client-ser
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { AccidentDetailsVoicePage } from '../accident-details-voice/accident-details-voice';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the ReportClaimVoicePage page.
@@ -27,11 +28,14 @@ export class ReportClaimVoicePage {
   policyResponse: any;
   policyOptions = [];
   policyText: string;
+  isSpeaking: boolean;
+
+  isSpeakingSubscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    apiAIClientService: ClientServiceProvider,
+    private apiAIClientService: ClientServiceProvider,
     private speechRecognition: SpeechRecognition,
     private ngZone: NgZone,
     private tts: TextToSpeech,
@@ -40,39 +44,34 @@ export class ReportClaimVoicePage {
     this.client = apiAIClientService.getAPIAIClientObject();
     this.policyResponse = navParams.get('policyResponse');
 
+    this.isSpeakingSubscription = this.apiAIClientService.isSpeaking.subscribe(
+      res => {
+        this.isSpeaking = res;
+      }
+    );
     this.hearPolicy();
   }
 
   ionViewDidLoad() {}
 
-  displayToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'bottom'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
-  }
-
   async hearPolicy() {
     this.policyText = this.policyResponse.text;
     this.policyOptions = this.policyResponse.policies;
 
-    this.tts
-      .speak({
-        text: this.policyText,
-        locale: 'en-US',
-        rate: 1
-      })
-      .then(() => {
-        //this.func();
-      })
-      .catch((reason: any) => this.displayToast(reason));
+    // this.isSpeaking = true;
+
+    this.apiAIClientService.speakResponse(this.policyText);
+
+    // this.tts
+    //   .speak({
+    //     text: this.policyText,
+    //     locale: 'en-US',
+    //     rate: 1
+    //   })
+    //   .then(() => {
+    //     this.isSpeaking = false;
+    //   })
+    //   .catch((reason: any) => this.apiAIClientService.displayToast(reason));
   }
 
   async sendVoice() {
@@ -107,13 +106,21 @@ export class ReportClaimVoicePage {
             .then(() => {
               //this.func();
             })
-            .catch((reason: any) => this.displayToast(reason));
+            .catch((reason: any) =>
+              this.apiAIClientService.displayToast(reason)
+            );
         }
       },
       error => {
         // place your error processing here
-        this.displayToast(error);
+        this.apiAIClientService.displayToast(error);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.isSpeakingSubscription.unsubscribe();
   }
 }
